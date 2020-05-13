@@ -1,8 +1,88 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react';
+import Navigation from './components/Navigation/Navigation';
+import SignIn from './components/SignIn/SignIn';
+import Register from './components/Register/Register';
+import DeleteAccount from './components/DeleteAccount/DeleteAccount';
+import ChangePassword from './components/ChangePassword/ChangePassword';
+import logo from './favicon.ico';
 import './App.css';
 
-function App() {
+const initialState = {
+  route: 'signin',
+  isSignedIn: false,
+  user: {
+    id: '',
+    name: '',
+    email: '', 
+    password: '',
+  }
+}
+
+class App extends Component {
+
+  constructor() {
+    super();
+    this.state = {
+      route: 'signin',
+      isSignedIn: false,
+      user: {
+        id: '',
+        name: '',
+        email: '',
+        password: '',
+      }
+    }
+  }
+
+  loadUser = (data) => {
+    this.setState({
+      user: {
+        id: data.id, 
+        name: data.name,
+        email: data.email,
+      }
+    })
+  }
+
+  onRouteChange = (route) => {
+    if (route === 'signIn' || route === 'register') {
+      this.setState(initialState)
+    } else if (route === 'home') {
+      this.setState({ isSignedIn: true })
+    } 
+    this.setState({ route })
+  }
+
+  render() {
+    const { route, isSignedIn, user } = this.state;
+    return(
+      <div className="App">
+        <div>~*~*~ SUPER COOL APP ~*~*~</div>
+        <Navigation onRouteChange = {this.onRouteChange} isSignedIn={isSignedIn} currentRoute = {route} />
+        { route === 'home' 
+          ? <div>hello {user.name}</div> 
+          : (route === 'signin'
+             ? <SignIn onRouteChange={this.onRouteChange} loadUser={this.loadUser}/> 
+             : (route === 'register'
+                ? <Register onRouteChange={this.onRouteChange} loadUser={this.loadUser}/> 
+                : (route === 'changepassword'
+                   ? <ChangePassword onRouteChange={this.onRouteChange} loadUser={this.loadUser} user = {user} /> 
+                   : (route === 'deleteaccount' 
+                      ? <DeleteAccount onRouteChange={this.onRouteChange} user = {user} /> 
+                      : <div></div>))))
+        }
+        </div>
+    );
+  }
+}
+
+export default App;
+
+
+//add logo eventually...
+//<img src={logo} width="50"/>
+
+/*function App() {
   return (
     <div className="App">
       <header className="App-header">
@@ -24,3 +104,4 @@ function App() {
 }
 
 export default App;
+*/

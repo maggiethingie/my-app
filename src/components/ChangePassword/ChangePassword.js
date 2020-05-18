@@ -41,7 +41,6 @@ class ChangePassword extends Component {
 	}
 
 	render() {
-		const { onRouteChange } = this.props;
 		return (
 			<article>
 			<main>

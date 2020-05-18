@@ -9,12 +9,12 @@ const Navigation = ({ onRouteChange, isSignedIn, currentRoute }) => {
 					sign out 
 				</p>
 				<p 
-					onClick = {() => onRouteChange('deleteaccount')}> 
-					delete your account
-				</p>
-				<p 
 					onClick = {() => onRouteChange('changepassword')}> 
 					change your password
+				</p>
+				<p 
+					onClick = {() => onRouteChange('deleteaccount')}> 
+					delete your account
 				</p>
 				</div>
 			)

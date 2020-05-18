@@ -4,7 +4,9 @@ import SignIn from './components/SignIn/SignIn';
 import Register from './components/Register/Register';
 import DeleteAccount from './components/DeleteAccount/DeleteAccount';
 import ChangePassword from './components/ChangePassword/ChangePassword';
-import logo from './favicon.ico';
+import Home from './components/Home/Home';
+import ShowListings from './components/ShowListings/ShowListings';
+//import logo from './favicon.ico';
 import './App.css';
 
 const initialState = {
@@ -54,15 +56,20 @@ class App extends Component {
   }
 
   render() {
-    const { route, isSignedIn, user } = this.state;
+    const { route, isSignedIn, user, region } = this.state;
     return(
       <div className="App">
         <div>~*~*~ SUPER COOL APP ~*~*~</div>
-        <Navigation onRouteChange = {this.onRouteChange} isSignedIn={isSignedIn} currentRoute = {route} />
         { route === 'home' 
-          ? <div>hello {user.name}</div> 
+          ? <div>
+              <Home user = {user} />
+              <ShowListings />
+            </div> 
           : (route === 'signin'
-             ? <SignIn onRouteChange={this.onRouteChange} loadUser={this.loadUser}/> 
+             ? <div>
+                  <SignIn onRouteChange={this.onRouteChange} loadUser={this.loadUser}/> 
+                  <ShowListings />
+               </div>
              : (route === 'register'
                 ? <Register onRouteChange={this.onRouteChange} loadUser={this.loadUser}/> 
                 : (route === 'changepassword'
@@ -71,6 +78,7 @@ class App extends Component {
                       ? <DeleteAccount onRouteChange={this.onRouteChange} user = {user} /> 
                       : <div></div>))))
         }
+        <Navigation onRouteChange = {this.onRouteChange} isSignedIn={isSignedIn} currentRoute = {route} />
         </div>
     );
   }
